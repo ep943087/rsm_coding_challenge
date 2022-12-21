@@ -32,9 +32,10 @@ const BreweryDetailsPage = () => {
 
   const getMap = (brewery: BreweryModel) => {
     if (!brewery.latitude || !brewery.longitude) {
-      return <div className="center-text error">Longitude and Latitude is invalid</div>;
+      return <div className="center-text error">Latitude or Longitude is invalid</div>;
     }
     const center: [number, number] = [parseFloat(brewery.latitude), parseFloat(brewery.longitude)];
+    
     return (
       <MapContainer
         style={{ width: '100%', height: '300px', border: '1px solid black'}}

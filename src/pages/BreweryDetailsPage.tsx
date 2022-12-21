@@ -1,6 +1,16 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { BreweryModel } from "../models/RequestModels";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+import leaflet from 'leaflet';
+
+const defaultIcon = leaflet.icon({
+  iconUrl: icon,
+  shadowUrl: iconShadow,
+  iconAnchor: [0, 0],
+});
 
 const BreweryDetailsPage = () => {
   const { breweryId } = useParams();
@@ -20,6 +30,30 @@ const BreweryDetailsPage = () => {
       .finally(() => setLoading(false));
   }, [breweryId]);
 
+  const getMap = (brewery: BreweryModel) => {
+    if (!brewery.latitude || !brewery.longitude) {
+      return <div className="center-text error">Longitude and Latitude is invalid</div>;
+    }
+    const center: [number, number] = [parseFloat(brewery.latitude), parseFloat(brewery.longitude)];
+    return (
+      <MapContainer
+        style={{ width: '100%', height: '300px', border: '1px solid black'}}
+        zoom={12}
+        center={center}
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <Marker position={center} icon={defaultIcon}>
+          <Popup>
+            {brewery.name}
+          </Popup>
+        </Marker>
+      </MapContainer>
+    );
+  };
+
   const getBreweryDetails = () => {
     if (!brewery) { return null }
 
@@ -34,14 +68,7 @@ const BreweryDetailsPage = () => {
           <div>{brewery.state}</div>
           <div>{brewery.postal_code}</div>
         </div>
-        {/* <GoogleMaps
-          bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY ?? ''}}
-          defaultCenter={{ lat: 10, lng: 10 }}
-          defaultZoom={1}
-          options={{ scrollwheel: false }}
-          style={{ width: '100%', height: '300px' }}
-          yesIWantToUseGoogleMapApiInternals
-        /> */}
+        {getMap(brewery)}
       </div>
     );
   };

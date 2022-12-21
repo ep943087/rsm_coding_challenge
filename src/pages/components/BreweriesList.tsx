@@ -11,7 +11,7 @@ const BreweriesList = (props: BreweriesListProps) => {
       {props.breweries.map(brewery => (
         <div className="brewery-card" key={brewery.id}>
           <div className="brewery-card-header">
-            <h3>{brewery.name}</h3>
+            <h4>{brewery.name}</h4>
           </div>
           <div className="brewery-card-content">
             <div>{brewery.street}</div>
@@ -22,7 +22,7 @@ const BreweriesList = (props: BreweriesListProps) => {
             <div>{brewery.postal_code}</div>
           </div>
           <div className="brewery-card-footer">
-            <Link to={`/brewery/${brewery.id}`}>Details</Link>
+            <Link className="link" to={`/brewery/${brewery.id}`}>Details</Link>
           </div>
         </div>
       ))}

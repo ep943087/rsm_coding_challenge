@@ -1,12 +1,13 @@
 $containerPadding: 10px;
 $primaryColor: rgb(255, 251, 235);
 $secondaryColor: rgb(253 230 138);
+$darkColor: rgb(180, 83, 9);
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: monospace;
+  font-family: Helvetica;
 }
 
 @mixin flex-center {
@@ -37,15 +38,17 @@ $secondaryColor: rgb(253 230 138);
     background-color: $secondaryColor;
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
+    border-bottom: 1px solid black;
   }
   
   .main {
     display: flex;
     flex-direction: column;
     margin-top: 75px;
-    min-height: calc(100vh - 150px);
+    flex: 1;
+    // min-height: calc(100vh - 150px);
     background-color: $primaryColor;
   }
 
@@ -55,6 +58,14 @@ $secondaryColor: rgb(253 230 138);
     color: white;
     @include flex-center;
   }
+}
+
+.center-text {
+  text-align: center;
+}
+
+.link {
+  color: $darkColor;
 }
 
 .page {
@@ -71,8 +82,6 @@ $secondaryColor: rgb(253 230 138);
 }
 
 .brewery-card {
-  padding: $containerPadding;
-  border-radius: 5px;
   width: 200px;
   height: 300px;
   border: 1px solid black;
@@ -81,17 +90,37 @@ $secondaryColor: rgb(253 230 138);
   flex-direction: column;
 
   .brewery-card-header {
-    height: 35px;
+    background-color: $secondaryColor;
+    text-align: center;
+    min-height: 50px;
+    padding: $containerPadding;
     @include flex-center;
   }
 
   .brewery-card-content {
-    padding-top: $containerPadding;
+    margin: $containerPadding;
     flex: 1;
+    display: flex;
+    @include flex-center;
+    flex-direction: column;
+    text-align: center;
   }
 
   .brewery-card-footer {
-    height: 35px;
+    height: 50px;
+    background-color: $secondaryColor;
     @include flex-center;
+  }
+}
+
+.set-child-margins {
+  > * {
+    margin: $containerPadding 0;
+  }
+}
+
+.search-form {
+  input {
+    padding: 5px;
   }
 }
